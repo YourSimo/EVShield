@@ -501,33 +501,25 @@ bool EVShieldBank::motorIsTimeDone(SH_Motor which_motors)
     
     if ( (s1 & SH_STATUS_TIME) == 0 && (s2 & SH_STATUS_TIME) == 0 ) {
       return true;
-    } else {
-      return false;
     }
   } else {
     s1 = motorGetStatusByte(which_motors);
     if ( (s1 & SH_STATUS_TIME) == 0 ) {
       return true;
-    } else {
-      return false;
     }
   }
-
+  return false;
 }
 
 // waited until a timed command finishes
 uint8_t EVShieldBank::motorWaitUntilTimeDone(SH_Motor which_motors)
 {
-  bool s;
-  delay(50);  // this delay is required for the status byte to be available for reading.
-  s = motorIsTimeDone(which_motors);  // fixed.
-  while (( s & SH_STATUS_TIME ) != 0 ) {
-    delay (50);
-    s = motorIsTimeDone(which_motors);  // fixed.
-  }
+  do {
+    delay(50);  // this delay is required for the status byte to be available for reading.
+  } while (!motorIsTimeDone(which_motors));
 }
 
-// True when a command based on using the motor encoder completes
+// true when a command based on using the motor encoder completes
 bool EVShieldBank::motorIsTachoDone(SH_Motor which_motors)
 {
   uint8_t s1, s2;
@@ -538,29 +530,22 @@ bool EVShieldBank::motorIsTachoDone(SH_Motor which_motors)
     
     if ( (s1 & SH_STATUS_TACHO) == 0 && (s2 & SH_STATUS_TACHO) == 0 ) {
       return true;
-    } else {
-      return false;
     }
   } else {
     s1 = motorGetStatusByte(which_motors);
     if ( (s1 & SH_STATUS_TACHO) == 0 ) {
       return true;
-    } else {
-      return false;
     }
   }
+  return false;
 }
 
 // waited until a turn-by-degrees command ends
 uint8_t EVShieldBank::motorWaitUntilTachoDone(SH_Motor which_motors)
 {
-  bool s;
-  delay(50);  // this delay is required for the status byte to be available for reading.
-  s = motorIsTachoDone(which_motors);
-  while (( s & SH_STATUS_TACHO ) != 0 ) {
-    delay (50);
-    s = motorIsTachoDone(which_motors);
-  }
+  do {
+    delay(50);  // this delay is required for the status byte to be available for reading.
+  } while (!motorIsTachoDone(which_motors));
 }
 
 
