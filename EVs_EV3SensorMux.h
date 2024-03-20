@@ -30,10 +30,10 @@
 #define	ESA_Command	0x41
 
 #include "EVShieldI2C.h"
+
 /** 
- * @brief This class 
- * interfaces with sensor attached to NXShield
- * */
+ * @brief This class interfaces with sensor attached to NXShield
+ */
 class EVs_EV3SensorMux : public EVShieldI2C
 {
 public:
@@ -57,7 +57,8 @@ public:
    */
   uint8_t setMode(char newMode);
 
-  /** it is possible to read back the mode that was set last time.
+  /** 
+   * It is possible to read back the mode that was set last time.
    * use getMode to read the current mode
    */
   byte getMode( );
@@ -66,8 +67,6 @@ public:
    * Read the value from the sensor attached to EVs_EV3SensorMux
    */
   int readValue();
-
-
 };
 
 #endif
